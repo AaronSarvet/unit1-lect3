@@ -272,21 +272,22 @@
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>U<span class="ot">&lt;-</span><span class="fu">runif</span>(<span class="dv">10000</span>, <span class="dv">0</span>,<span class="dv">1</span>)</span>
 <span id="cb1-2"><a></a><span class="fu">head</span>(U, <span class="dv">25</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 0.7516654 0.7550282 0.6794609 0.7243687 0.8472480 0.9834753 0.7419241
- [8] 0.3148803 0.8193543 0.8630167 0.5155631 0.3711469 0.6978833 0.4830945
-[15] 0.6152632 0.9462419 0.9177134 0.5725926 0.3438755 0.1916295 0.1264009
-[22] 0.7358178 0.4734793 0.0273331 0.7214045</code></pre>
+<pre><code> [1] 0.032841538 0.573602457 0.672208553 0.145321894 0.845062138 0.819601608
+ [7] 0.267040804 0.068252416 0.663778837 0.041625272 0.554253296 0.019686542
+[13] 0.408139895 0.238968895 0.004440451 0.718537117 0.663751059 0.517982219
+[19] 0.787261104 0.524826337 0.275490956 0.615569528 0.513407758 0.106522914
+[25] 0.854761533</code></pre>
 </div>
 </div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>Z<span class="ot">&lt;-</span><span class="fu">qnorm</span>(U, <span class="dv">0</span>, <span class="dv">1</span>)</span>
 <span id="cb3-2"><a></a><span class="fu">head</span>(Z, <span class="dv">25</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1]  0.67973970  0.69039852  0.46619196  0.59586919  1.02470167  2.13148192
- [7]  0.64928878 -0.48206391  0.91290696  1.09397333  0.03902088 -0.32881715
-[13]  0.51832225 -0.04238839  0.29306363  1.60945784  1.38985411  0.18297872
-[19] -0.40190886 -0.87190726 -1.14357065  0.63050463 -0.06652652 -1.92151988
-[25]  0.58701890</code></pre>
+<pre><code> [1] -1.84058038  0.18555329  0.44601987 -1.05671038  1.01548284  0.91384788
+ [7] -0.62178750 -1.48893368  0.42279844 -1.73212929  0.13641476 -2.06026635
+[13] -0.23233248 -0.70962326 -2.61660511  0.57850123  0.42272230  0.04509001
+[19]  0.79695392  0.06227062 -0.59628940  0.29386516  0.03361459 -1.24523378
+[25]  1.05707593</code></pre>
 </div>
 </div>
 </section>
@@ -350,8 +351,8 @@
 <p>Then:</p>
 </div>
 <ul>
-<li class="fragment"><span class="math inline">\(Z_1=\begin{cases} 1 &amp; \text{ if } U_1\leq 0.5 \\ 0 &amp; \text{ if } U_1\geq 0.5 \end{cases}\)</span></li>
-<li class="fragment"><span class="math inline">\(Z_2=\begin{cases} 1 &amp; \text{ if } U_2\leq 0.25 \text{ and } Z_1=1 \\ 0 &amp; \text{ if } U_2 \geq 0.25 \text{ and } Z_1=1 \\ 1 &amp; \text{ if } U_2\leq 0.75 \text{ and } Z_1=0   \\ 0 &amp; \text{ if } U_2\geq 0.75 \text{ and } Z_1=0 \end{cases}.\)</span></li>
+<li class="fragment"><span class="math inline">\(Z_1=\begin{cases} 1 &amp; \text{ if } U_1\leq 0.5 \\ 0 &amp; \text{ if } U_1&gt; 0.5 \end{cases}\)</span></li>
+<li class="fragment"><span class="math inline">\(Z_2=\begin{cases} 1 &amp; \text{ if } U_2\leq 0.25 \text{ and } Z_1=1 \\ 0 &amp; \text{ if } U_2 &gt; 0.25 \text{ and } Z_1=1 \\ 1 &amp; \text{ if } U_2\leq 0.75 \text{ and } Z_1=0   \\ 0 &amp; \text{ if } U_2&gt; 0.75 \text{ and } Z_1=0 \end{cases}.\)</span></li>
 </ul>
 </section>
 <section id="sampling-from-joint-distributions-3" class="slide level2">
@@ -364,12 +365,12 @@
 <span id="cb5-5"><a></a><span class="fu">prop.table</span>(<span class="fu">table</span>(Z1))[<span class="dv">2</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     1 
-0.4975 </code></pre>
+0.4999 </code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">prop.table</span>(<span class="fu">table</span>(Z1, Z2), <span class="at">margin=</span><span class="dv">1</span>)[<span class="dv">2</span>, ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        0         1 
-0.7449246 0.2550754 </code></pre>
+0.7557512 0.2442488 </code></pre>
 </div>
 </div>
 </section>
@@ -415,7 +416,7 @@ lm(formula = Z2 ~ Z1 + I(Z1^2))
 
 Coefficients:
 (Intercept)           Z1      I(Z1^2)  
-    -0.2483       0.5120       2.0194  </code></pre>
+     0.1070       0.1987       2.0487  </code></pre>
 </div>
 </div>
 </section>
@@ -444,11 +445,11 @@ Coefficients:
 <span id="cb11-7"><a></a><span class="fu">coef</span>(fit)[<span class="st">"I(Z1^2)"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> I(Z1^2) 
-2.019383 </code></pre>
+2.048722 </code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">summary</span>(fit)<span class="sc">$</span>coefficients[<span class="st">"I(Z1^2)"</span>, <span class="st">"Std. Error"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.0971504</code></pre>
+<pre><code>[1] 0.133742</code></pre>
 </div>
 </div>
 </section>
@@ -481,27 +482,27 @@ Coefficients:
 <span id="cb15-23"><a></a>}</span>
 <span id="cb15-24"><a></a><span class="fu">mean</span>(beta_0_hat <span class="sc">-</span> <span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.002789423</code></pre>
+<pre><code>[1] 0.002318956</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="fu">mean</span>(se_beta0<span class="sc">-</span><span class="fu">sd</span>(beta_0_hat))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.002091661</code></pre>
+<pre><code>[1] -0.001527423</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a><span class="fu">mean</span>(beta_1_hat <span class="sc">-</span> <span class="fl">0.5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.0001545926</code></pre>
+<pre><code>[1] -0.00195252</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="fu">mean</span>(se_beta1<span class="sc">-</span><span class="fu">sd</span>(beta_1_hat))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.002606927</code></pre>
+<pre><code>[1] -0.0003287137</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">mean</span>(beta_2_hat <span class="sc">-</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.00212436</code></pre>
+<pre><code>[1] -0.0005224367</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a><span class="fu">mean</span>(se_beta2<span class="sc">-</span><span class="fu">sd</span>(beta_2_hat))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.003022693</code></pre>
+<pre><code>[1] -0.004294872</code></pre>
 </div>
 </div>
 </section>
