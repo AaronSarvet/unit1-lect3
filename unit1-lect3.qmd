@@ -1,0 +1,332 @@
+---
+title: "Simulation basics"
+
+format:
+  revealjs:
+    slide-level: 2
+    incremental: true
+    slide-number: true
+    controls: true
+    autoScale: true
+    minScale: 0.6
+    maxScale: 1.0
+    center: false
+    margin: 0.05
+    css: styles.css
+
+    html-math-method:
+      method: mathjax
+      url: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+---
+
+## Agenda
+
+- Brief review of simulation basics (we will expand on this later)
+- Inverse transform sampling for joint distributions
+- Motivation for causal inference (if we have time to start)
+
+## Inverse transform sampling
+
+Key result:
+
+- Suppose $U \sim Unif(0,1)$
+- Suppose $F_X(\cdot)$ is a cumulative distribution function (cdf) for (arbitrary) $X$
+  - i.e., $F_X(x) = P(X<x)$
+- Suppose $F_X^{-1}(\cdot)$ is the inverse cdf
+  - i.e., $F_{X}^{-1}(u) = \Big\{x \ \text{ s.t. } \  P(X<x) = u\Big\}.$
+
+## Inverse transform sampling
+
+- Define $Z=F_{X}^{-1}(U)$
+
+::: {.fragment}
+Then: 
+:::
+
+- $F_{Z}(x) = P\Big(F_{X}^{-1}(U)<x\Big)=F_X(x)$.
+  - i.e., $Z=F_{X}^{-1}(U)$ is distributed the same as $X$.
+
+## Inverse Transform sampling
+
+<iframe class="app-embed" src="https://asarvet.shinyapps.io/bernoulli-invtransform/">
+
+</iframe>
+
+## Inverse transform sampling
+
+Why does this work?
+
+- The key property of $Unif(0,1)$ variables (e.g., $U$) is: 
+  - $P(U<u)=u$ for $u\in[0,1]$.
+
+- Now consider some r.v. $Y$ with cdf $F_Y$ taking values on the real number line, $\mathbb{R}$. 
+  - Let's say it is a standard normal variable $\mathcal{N}(0,1)$. (disclaimer, normal variables don't have a closed form cdf).
+  
+## Inverse transform sampling{.smaller} 
+
+-Thus (and remembering that $F_Y^{-1}$ is monotonic increasing):
+
+  - $P\Big(F_Y^{-1}(U)<y\Big)=P\Big(U<F_Y(y)\Big) = F_Y(y).$
+  - e.g., $P\Big(F_Y^{-1}(U)<-1.96\Big) = P(U<0.025) = 0.025 = P(Y<-1.96)$
+  - e.g., $P\Big(F_Y^{-1}(U)<0\Big) = P(U<0.5) = 0.5 = P(Y<0)$
+
+![](images/normal.png){width="500"}
+
+## Inverse transform sampling
+
+```{r}
+#| echo: true
+#| eval: true
+U<-runif(10000, 0,1)
+head(U, 25)
+```
+```{r}
+#| echo: true
+#| eval: true
+Z<-qnorm(U, 0, 1)
+head(Z, 25)
+```
+
+## Inverse transform sampling
+```{r}
+library(ggplot2)
+y<-Z
+ggplot(data.frame(y = y), aes(x = y)) +
+  geom_histogram(
+    aes(y = after_stat(density)),
+    bins = 30,
+    fill = "grey90",
+    color = "white"
+  ) +
+  geom_density(
+    linewidth = 1
+  ) +
+  stat_function(
+    fun = dnorm,
+    args = list(mean = 0, sd = 1),
+    linewidth = 1,
+    linetype = "dashed",
+    color = "red"
+  ) +
+  labs(
+    title = "Histogram of Z",
+    x = "Z",
+    y = "Density"
+  ) +
+  theme_minimal()
+```
+
+## Sampling for joint distributions
+
+- Consider a collection of variables (a vector) $\mathbf{X}\equiv(X_1,\dots, X_p)\sim P.$
+- Suppose we consider a specific $P$. How do we simulate a vector $\mathbf{Z}\sim P.$  
+
+## Sampling for joint distributions
+
+- Recall that the distribution $P$ is specified by the joint density function $f_{\mathbf{X}}(x_1, \dots, x_p)$.
+
+- A joint density function can be factorized as a product of conditional density functions:$$f_{\mathbf{X}}(x_1, \dots, x_p) = \prod\limits_{k=1}^p f_{X_k \mid X_{k-1}, \dots, X_1}(x_k \mid x_{k-1}, \dots, x_1).$$
+  - e.g., $f(x_1, x_2) = f(x_1 \mid x_2)f(x_2)$.
+  
+## Sampling from joint distributions
+
+Suppose:
+
+- $U_k \sim Unif(0,1)$ are mutually independent, for $k=1,\dots, p$.
+- $F_k(\cdot)$ is a cdf for $X_k$ given $X_1,\dots, X_{k-1}.$
+  - i.e., $F_k(x_k \mid x_{k-1}, \dots, x_1) = P(X_k<x_k \mid x_{k-1}, \dots, x_1).$
+- $F_k^{-1}(\cdot)$ is the inverse cdf, i.e.,
+   $$\begin{align}& F_{k}^{-1}(u \mid x_{k-1}, \dots, x_1) \nonumber \\  =& \Big\{x_k \ \text{ s.t. } \  P(X_k<x_k \mid x_{k-1}, \dots, x_1) = u\Big\}. \nonumber \end{align}$$
+  
+  
+## Sampling from joint distributions
+
+- Define $Z_1=F_{1}^{-1}(U_1)$
+- Iteratively define (from $k=2,\dots, p$) $$Z_k=F^{-1}_k(U_k \mid Z_{k-1}, \dots, Z_1)$$
+
+::: {.fragment}
+Then: 
+:::
+
+- $F_{\mathbf{Z}}(\mathbf{x}) =F_{\mathbf{X}}(\mathbf{x})$.
+  - i.e., $\mathbf{Z}$ is distributed the same as $\mathbf{X}$.
+  
+## Sampling from joint distributions
+
+Example 1: $\mathbf{X}=(X_1, X_2)$, each binary $\{0, 1\}$ variables.
+
+  - $P(X_1=1)=0.5$, 
+  - $P(X_2 =1 \mid X_1=x_1 )= \begin{cases} 0.25 \text{ if } x_1=1 \\ 0.75 \text{ if } x_1=0 \end{cases}$
+  
+::: {.fragment}
+Then: 
+:::
+
+-  $Z_1=\begin{cases} 1 & \text{ if } U_1<0.5 \\ 0 & \text{ if } U_1\geq 0.5 \end{cases}$
+- $Z_2=\begin{cases} 1 & \text{ if } U_2<0.25 \text{ and } Z_1=1 \\ 0 & \text{ if } U_2 \geq 0.25 \text{ and } Z_1=1 \\ 1 & \text{ if } U_2<0.75 \text{ and } Z_1=0   \\ 0 & \text{ if } U_2\geq 0.75 \text{ and } Z_1=0 \end{cases}.$
+  
+## Sampling from joint distributions
+
+```{r}
+#| echo: true
+#| eval: true
+U1<-runif(10000, 0,1)
+U2<-runif(10000, 0,1)
+Z1 = qbinom(U1, 1, 0.5)
+Z2 = qbinom(U2, 1, 0.75 - Z1*0.5)
+prop.table(table(Z1))[2]
+prop.table(table(Z1, Z2), margin=1)[2, ]
+```
+## Sampling from joint distributions
+
+Example 2: 
+
+- $\mathbf{X}=(X_1, X_2)$, each normally distributed variables.
+- Suppose: 
+
+  - $X_1 \sim \mathcal{N}(0,1)$
+  - $X_2 \sim \mathcal{N}(\beta_0 + \beta_1X_1 + \beta_2X^2,\sigma^2)$
+  - $(\beta_0, \beta_1, \beta_2, \sigma^2) = (0, 0.5, 2, 4)$
+- Let $\Phi^{-1}$ be the inverse cdf for the standard normal.
+
+## Sampling from joint distributions
+  - $(\beta_0, \beta_1, \beta_2, \sigma^2) = (0, 0.5, 2, 4)$
+  
+::: {.fragment}
+Then: 
+:::
+
+- $Z_1= \Phi^{-1}(U_1)$
+- $Z_2= 2\Phi^{-1}(U_2) + (0.5 Z_1+ 2Z_1^2)$
+
+## Sampling from joint distributions
+
+```{r}
+#| echo: true
+#| eval: true
+U1<-runif(100, 0,1)
+U2<-runif(100, 0,1)
+Z1 = qnorm(U1, 0, 1)
+Z2 = qnorm(U2, 0.5*Z1 + 2*Z1^2, 2)
+lm(Z2~Z1 + I(Z1^2))
+```
+
+## Sampling from joint distributions
+
+```{r}
+# True coefficients
+beta0 <- 0
+beta1 <- 0.5
+beta2 <- 2
+
+df <- data.frame(Z1, Z2)
+
+# Fit quadratic regression
+fit <- lm(Z2 ~ Z1 + I(Z1^2), data = df)
+
+# Grid for curves
+grid <- data.frame(Z1 = seq(min(df$Z1), max(df$Z1), length.out = 500))
+grid$fit  <- predict(fit, newdata = grid)
+grid$true <- beta0 + beta1*grid$Z1 + beta2*grid$Z1^2
+
+ggplot(df, aes(x = Z1, y = Z2)) +
+  geom_point(alpha = 0.55, size = 2) +
+  geom_line(data = grid, aes(y = fit, linetype = "Fitted (quadratic)"), linewidth = 1.2) +
+  geom_line(data = grid, aes(y = true, linetype = "True function"), linewidth = 1.2, color = "red") +
+  labs(
+#    title = "Quadratic regression: data, fitted curve, and true function",
+#    subtitle = expression(Z[2] == beta[0] + beta[1]*Z[1] + beta[2]*Z[1]^2 + #epsilon ~
+#                            " with " ~ (beta[0]==0)*"," ~ (beta[1]==0.5)*"," ~ #(beta[2]==2)),
+    x = expression(Z[1]),
+    y = expression(Z[2]),
+    linetype = NULL
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    legend.position = "top",
+    panel.grid.minor = element_blank()
+  )
+```
+
+## Sampling from sampling distributions
+
+- Consider a sample of size $n$, $\mathbf{X}_n \equiv (X_1,\dots, X_n)$.
+- When data are i.i.d, $f(x_k \mid x_{k-1}, \dots, x_1) = f(x_k)$.
+- This means that simulating samples is easy!
+
+## Sampling from sampling distributions
+
+Here we simulate a single sample of size $n=100$.
+```{r}
+#| echo: true
+#| eval: true
+n=100
+U1<-runif(n)
+U2<-runif(n, 0,1)
+Z1 = qnorm(U1, 0, 1)
+Z2 = qnorm(U2, 0.5*Z1 + 2*Z1^2, 2)
+fit <- lm(Z2 ~ Z1 + I(Z1^2), data = df)
+coef(fit)["I(Z1^2)"]
+summary(fit)$coefficients["I(Z1^2)", "Std. Error"]
+```
+
+## Sampling from sampling distributions
+
+Here we simulate a 1000 samples of size $n=100$.
+```{r}
+#| echo: true
+#| eval: true
+library(dplyr)
+n=100
+B=10000
+U1 = runif(n*B, 0,1)
+U2 = runif(n*B, 0,1)
+Z1 = qnorm(U1, 0, 1) %>% matrix(nrow=n, ncol=B)
+Z2 = qnorm(U2, 0.5*Z1 + 2*Z1^2, 2) %>% matrix(nrow=n, ncol=B)
+beta_2_hat = rep(NA, B)
+beta_0_hat <- rep(NA, B)
+beta_1_hat <- rep(NA, B)
+se_beta0 = rep(NA, B)
+se_beta1 = rep(NA, B)
+se_beta2 = rep(NA, B)
+for(i in 1:B){
+  df<-data.frame(Z1=Z1[,i], Z2=Z2[,i])
+  fit <- lm(Z2 ~ Z1 + I(Z1^2), data=df)
+  beta_0_hat[i] <- coef(fit)["(Intercept)"]
+  se_beta0[i] <- summary(fit)$coefficients["(Intercept)", "Std. Error"]
+  beta_1_hat[i] <- coef(fit)["Z1"]
+  se_beta1[i] <- summary(fit)$coefficients["Z1", "Std. Error"]
+  beta_2_hat[i] <- coef(fit)["I(Z1^2)"]
+  se_beta2[i] <- summary(fit)$coefficients["I(Z1^2)", "Std. Error"]
+}
+mean(beta_0_hat - 0)
+mean(se_beta0-sd(beta_0_hat))
+mean(beta_1_hat - 0.5)
+mean(se_beta1-sd(beta_1_hat))
+mean(beta_2_hat - 2)
+mean(se_beta2-sd(beta_2_hat))
+
+```
+
+## Sampling from sampling distributions
+
+<iframe class="app-embed" src="https://asarvet.shinyapps.io/confint/">
+
+</iframe>
+
+## Sampling from sampling distributions
+
+<iframe class="app-embed" src="https://asarvet.shinyapps.io/asymnorm/">
+
+</iframe>
+
+
+
+
+
+
+
+
+
+
+
