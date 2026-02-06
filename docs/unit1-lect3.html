@@ -214,11 +214,11 @@
 <li class="fragment">Suppose <span class="math inline">\(U \sim Unif(0,1)\)</span></li>
 <li class="fragment">Suppose <span class="math inline">\(F_X(\cdot)\)</span> is a cumulative distribution function (cdf) for (arbitrary) <span class="math inline">\(X\)</span>
 <ul>
-<li class="fragment">i.e., <span class="math inline">\(F_X(x) = P(X&lt;x)\)</span></li>
+<li class="fragment">i.e., <span class="math inline">\(F_X(x) = P(X\leq x)\)</span></li>
 </ul></li>
 <li class="fragment">Suppose <span class="math inline">\(F_X^{-1}(\cdot)\)</span> is the inverse cdf
 <ul>
-<li class="fragment">i.e., <span class="math inline">\(F_{X}^{-1}(u) = \Big\{x \ \text{ s.t. } \  P(X&lt;x) = u\Big\}.\)</span></li>
+<li class="fragment">i.e., <span class="math inline">\(F_{X}^{-1}(u) = \Big\{x \ \text{ s.t. } \  P(X\leqx) = u\Big\}.\)</span></li>
 </ul></li>
 </ul>
 </section>
@@ -231,7 +231,7 @@
 <p>Then:</p>
 </div>
 <ul>
-<li class="fragment"><span class="math inline">\(F_{Z}(x) = P\Big(F_{X}^{-1}(U)&lt;x\Big)=F_X(x)\)</span>.
+<li class="fragment"><span class="math inline">\(F_{Z}(x) = P\Big(F_{X}^{-1}(U)\leq x\Big)=F_X(x)\)</span>.
 <ul>
 <li class="fragment">i.e., <span class="math inline">\(Z=F_{X}^{-1}(U)\)</span> is distributed the same as <span class="math inline">\(X\)</span>.</li>
 </ul></li>
@@ -248,7 +248,7 @@
 <ul>
 <li class="fragment">The key property of <span class="math inline">\(Unif(0,1)\)</span> variables (e.g., <span class="math inline">\(U\)</span>) is:
 <ul>
-<li class="fragment"><span class="math inline">\(P(U&lt;u)=u\)</span> for <span class="math inline">\(u\in[0,1]\)</span>.</li>
+<li class="fragment"><span class="math inline">\(P(U\leq u)=u\)</span> for <span class="math inline">\(u\in[0,1]\)</span>.</li>
 </ul></li>
 <li class="fragment">Now consider some r.v. <span class="math inline">\(Y\)</span> with cdf <span class="math inline">\(F_Y\)</span> taking values on the real number line, <span class="math inline">\(\mathbb{R}\)</span>.
 <ul>
@@ -260,9 +260,9 @@
 <h2>Inverse transform sampling</h2>
 <p>-Thus (and remembering that <span class="math inline">\(F_Y^{-1}\)</span> is monotonic increasing):</p>
 <ul>
-<li class="fragment"><span class="math inline">\(P\Big(F_Y^{-1}(U)&lt;y\Big)=P\Big(U&lt;F_Y(y)\Big) = F_Y(y).\)</span></li>
-<li class="fragment">e.g., <span class="math inline">\(P\Big(F_Y^{-1}(U)&lt;-1.96\Big) = P(U&lt;0.025) = 0.025 = P(Y&lt;-1.96)\)</span></li>
-<li class="fragment">e.g., <span class="math inline">\(P\Big(F_Y^{-1}(U)&lt;0\Big) = P(U&lt;0.5) = 0.5 = P(Y&lt;0)\)</span></li>
+<li class="fragment"><span class="math inline">\(P\Big(F_Y^{-1}(U)\leqy\Big)=P\Big(U\leqF_Y(y)\Big) = F_Y(y).\)</span></li>
+<li class="fragment">e.g., <span class="math inline">\(P\Big(F_Y^{-1}(U)\leq-1.96\Big) = P(U\leq0.025) = 0.025 = P(Y\leq-1.96)\)</span></li>
+<li class="fragment">e.g., <span class="math inline">\(P\Big(F_Y^{-1}(U)\leq0\Big) = P(U\leq0.5) = 0.5 = P(Y\leq0)\)</span></li>
 </ul>
 
 <img data-src="images/normal.png" width="500" class="r-stretch"></section>
@@ -272,22 +272,22 @@
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>U<span class="ot">&lt;-</span><span class="fu">runif</span>(<span class="dv">10000</span>, <span class="dv">0</span>,<span class="dv">1</span>)</span>
 <span id="cb1-2"><a></a><span class="fu">head</span>(U, <span class="dv">25</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 0.868779559 0.766590637 0.507304552 0.780979963 0.772016089 0.313782562
- [7] 0.124369882 0.057669285 0.147423162 0.004199094 0.113316188 0.238059777
-[13] 0.448354622 0.522180225 0.890023589 0.816170455 0.390118059 0.120435805
-[19] 0.262580578 0.117165140 0.567276212 0.831596642 0.562445226 0.211932160
-[25] 0.885022396</code></pre>
+<pre><code> [1] 0.09917466 0.19873888 0.91107296 0.18034093 0.22990421 0.01473255
+ [7] 0.36201053 0.35353521 0.42074918 0.44553400 0.53369765 0.55343359
+[13] 0.56788955 0.66918928 0.51758747 0.60030990 0.96551891 0.25034516
+[19] 0.03299121 0.30767756 0.83395037 0.15374975 0.72974314 0.34551738
+[25] 0.05465245</code></pre>
 </div>
 </div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>Z<span class="ot">&lt;-</span><span class="fu">qnorm</span>(U, <span class="dv">0</span>, <span class="dv">1</span>)</span>
 <span id="cb3-2"><a></a><span class="fu">head</span>(Z, <span class="dv">25</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1]  1.12064058  0.72766493  0.01831082  0.77550709  0.74550280 -0.48515680
- [7] -1.15341579 -1.57464430 -1.04754926 -2.63562748 -1.20907931 -0.71255760
-[13] -0.12981949  0.05562625  1.22665358  0.90086690 -0.27901134 -1.17281099
-[19] -0.63540983 -1.18927803  0.16944380  0.96049387  0.15717168 -0.79973505
-[25]  1.20047425</code></pre>
+<pre><code> [1] -1.28626863 -0.84613443  1.34739179 -0.91406660 -0.73916235 -2.17720742
+ [7] -0.35308989 -0.37579350 -0.19997726 -0.13695294  0.08456818  0.13434115
+[13]  0.17100365  0.43767563  0.04409954  0.25414933  1.81866752 -0.67340396
+[19] -1.83854311 -0.50244416  0.96989414 -1.02048290  0.61203634 -0.39745120
+[25] -1.60132522</code></pre>
 </div>
 </div>
 </section>
@@ -319,9 +319,9 @@
 <li class="fragment"><span class="math inline">\(U_k \sim Unif(0,1)\)</span> are mutually independent, for <span class="math inline">\(k=1,\dots, p\)</span>.</li>
 <li class="fragment"><span class="math inline">\(F_k(\cdot)\)</span> is a cdf for <span class="math inline">\(X_k\)</span> given <span class="math inline">\(X_1,\dots, X_{k-1}.\)</span>
 <ul>
-<li class="fragment">i.e., <span class="math inline">\(F_k(x_k \mid x_{k-1}, \dots, x_1) = P(X_k&lt;x_k \mid x_{k-1}, \dots, x_1).\)</span></li>
+<li class="fragment">i.e., <span class="math inline">\(F_k(x_k \mid x_{k-1}, \dots, x_1) = P(X_k\leqx_k \mid x_{k-1}, \dots, x_1).\)</span></li>
 </ul></li>
-<li class="fragment"><span class="math inline">\(F_k^{-1}(\cdot)\)</span> is the inverse cdf, i.e., <span class="math display">\[\begin{align}&amp; F_{k}^{-1}(u \mid x_{k-1}, \dots, x_1) \nonumber \\  =&amp; \Big\{x_k \ \text{ s.t. } \  P(X_k&lt;x_k \mid x_{k-1}, \dots, x_1) = u\Big\}. \nonumber \end{align}\]</span></li>
+<li class="fragment"><span class="math inline">\(F_k^{-1}(\cdot)\)</span> is the inverse cdf, i.e., <span class="math display">\[\begin{align}&amp; F_{k}^{-1}(u \mid x_{k-1}, \dots, x_1) \nonumber \\  =&amp; \Big\{x_k \ \text{ s.t. } \  P(X_k\leqx_k \mid x_{k-1}, \dots, x_1) = u\Big\}. \nonumber \end{align}\]</span></li>
 </ul>
 </section>
 <section id="sampling-from-joint-distributions-1" class="slide level2">
@@ -351,8 +351,8 @@
 <p>Then:</p>
 </div>
 <ul>
-<li class="fragment"><span class="math inline">\(Z_1=\begin{cases} 1 &amp; \text{ if } U_1&lt;0.5 \\ 0 &amp; \text{ if } U_1\geq 0.5 \end{cases}\)</span></li>
-<li class="fragment"><span class="math inline">\(Z_2=\begin{cases} 1 &amp; \text{ if } U_2&lt;0.25 \text{ and } Z_1=1 \\ 0 &amp; \text{ if } U_2 \geq 0.25 \text{ and } Z_1=1 \\ 1 &amp; \text{ if } U_2&lt;0.75 \text{ and } Z_1=0   \\ 0 &amp; \text{ if } U_2\geq 0.75 \text{ and } Z_1=0 \end{cases}.\)</span></li>
+<li class="fragment"><span class="math inline">\(Z_1=\begin{cases} 1 &amp; \text{ if } U_1\leq0.5 \\ 0 &amp; \text{ if } U_1\geq 0.5 \end{cases}\)</span></li>
+<li class="fragment"><span class="math inline">\(Z_2=\begin{cases} 1 &amp; \text{ if } U_2\leq0.25 \text{ and } Z_1=1 \\ 0 &amp; \text{ if } U_2 \geq 0.25 \text{ and } Z_1=1 \\ 1 &amp; \text{ if } U_2\leq0.75 \text{ and } Z_1=0   \\ 0 &amp; \text{ if } U_2\geq 0.75 \text{ and } Z_1=0 \end{cases}.\)</span></li>
 </ul>
 </section>
 <section id="sampling-from-joint-distributions-3" class="slide level2">
@@ -365,12 +365,12 @@
 <span id="cb5-5"><a></a><span class="fu">prop.table</span>(<span class="fu">table</span>(Z1))[<span class="dv">2</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     1 
-0.5017 </code></pre>
+0.5046 </code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">prop.table</span>(<span class="fu">table</span>(Z1, Z2), <span class="at">margin=</span><span class="dv">1</span>)[<span class="dv">2</span>, ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        0         1 
-0.7596173 0.2403827 </code></pre>
+0.7439556 0.2560444 </code></pre>
 </div>
 </div>
 </section>
@@ -416,7 +416,7 @@ lm(formula = Z2 ~ Z1 + I(Z1^2))
 
 Coefficients:
 (Intercept)           Z1      I(Z1^2)  
-   -0.02506      0.32304      1.96991  </code></pre>
+    -0.2794       0.3113       1.9627  </code></pre>
 </div>
 </div>
 </section>
@@ -444,12 +444,12 @@ Coefficients:
 <span id="cb11-6"><a></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(Z2 <span class="sc">~</span> Z1 <span class="sc">+</span> <span class="fu">I</span>(Z1<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> df)</span>
 <span id="cb11-7"><a></a><span class="fu">coef</span>(fit)[<span class="st">"I(Z1^2)"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> I(Z1^2) 
-1.969912 </code></pre>
+<pre><code>I(Z1^2) 
+1.96272 </code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">summary</span>(fit)<span class="sc">$</span>coefficients[<span class="st">"I(Z1^2)"</span>, <span class="st">"Std. Error"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.1755873</code></pre>
+<pre><code>[1] 0.1953438</code></pre>
 </div>
 </div>
 </section>
@@ -482,27 +482,27 @@ Coefficients:
 <span id="cb15-23"><a></a>}</span>
 <span id="cb15-24"><a></a><span class="fu">mean</span>(beta_0_hat <span class="sc">-</span> <span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.001085881</code></pre>
+<pre><code>[1] -0.003695087</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="fu">mean</span>(se_beta0<span class="sc">-</span><span class="fu">sd</span>(beta_0_hat))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.001268872</code></pre>
+<pre><code>[1] -0.001819115</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a><span class="fu">mean</span>(beta_1_hat <span class="sc">-</span> <span class="fl">0.5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.00119077</code></pre>
+<pre><code>[1] 0.002159592</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="fu">mean</span>(se_beta1<span class="sc">-</span><span class="fu">sd</span>(beta_1_hat))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.0005488761</code></pre>
+<pre><code>[1] -0.00165578</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">mean</span>(beta_2_hat <span class="sc">-</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 8.977828e-05</code></pre>
+<pre><code>[1] 0.0007921485</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a><span class="fu">mean</span>(se_beta2<span class="sc">-</span><span class="fu">sd</span>(beta_2_hat))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.002575387</code></pre>
+<pre><code>[1] -0.001903839</code></pre>
 </div>
 </div>
 </section>

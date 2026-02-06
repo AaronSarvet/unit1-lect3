@@ -31,9 +31,9 @@ Key result:
 
 - Suppose $U \sim Unif(0,1)$
 - Suppose $F_X(\cdot)$ is a cumulative distribution function (cdf) for (arbitrary) $X$
-  - i.e., $F_X(x) = P(X<x)$
+  - i.e., $F_X(x) = P(X\leq x)$
 - Suppose $F_X^{-1}(\cdot)$ is the inverse cdf
-  - i.e., $F_{X}^{-1}(u) = \Big\{x \ \text{ s.t. } \  P(X<x) = u\Big\}.$
+  - i.e., $F_{X}^{-1}(u) = \Big\{x \ \text{ s.t. } \  P(X\leqx) = u\Big\}.$
 
 ## Inverse transform sampling
 
@@ -43,7 +43,7 @@ Key result:
 Then: 
 :::
 
-- $F_{Z}(x) = P\Big(F_{X}^{-1}(U)<x\Big)=F_X(x)$.
+- $F_{Z}(x) = P\Big(F_{X}^{-1}(U)\leq x\Big)=F_X(x)$.
   - i.e., $Z=F_{X}^{-1}(U)$ is distributed the same as $X$.
 
 ## Inverse Transform sampling
@@ -57,7 +57,7 @@ Then:
 Why does this work?
 
 - The key property of $Unif(0,1)$ variables (e.g., $U$) is: 
-  - $P(U<u)=u$ for $u\in[0,1]$.
+  - $P(U\leq u)=u$ for $u\in[0,1]$.
 
 - Now consider some r.v. $Y$ with cdf $F_Y$ taking values on the real number line, $\mathbb{R}$. 
   - Let's say it is a standard normal variable $\mathcal{N}(0,1)$. (disclaimer, normal variables don't have a closed form cdf).
@@ -66,9 +66,9 @@ Why does this work?
 
 -Thus (and remembering that $F_Y^{-1}$ is monotonic increasing):
 
-  - $P\Big(F_Y^{-1}(U)<y\Big)=P\Big(U<F_Y(y)\Big) = F_Y(y).$
-  - e.g., $P\Big(F_Y^{-1}(U)<-1.96\Big) = P(U<0.025) = 0.025 = P(Y<-1.96)$
-  - e.g., $P\Big(F_Y^{-1}(U)<0\Big) = P(U<0.5) = 0.5 = P(Y<0)$
+  - $P\Big(F_Y^{-1}(U)\leqy\Big)=P\Big(U\leqF_Y(y)\Big) = F_Y(y).$
+  - e.g., $P\Big(F_Y^{-1}(U)\leq-1.96\Big) = P(U\leq0.025) = 0.025 = P(Y\leq-1.96)$
+  - e.g., $P\Big(F_Y^{-1}(U)\leq0\Big) = P(U\leq0.5) = 0.5 = P(Y\leq0)$
 
 ![](images/normal.png){width="500"}
 
@@ -134,9 +134,9 @@ Suppose:
 
 - $U_k \sim Unif(0,1)$ are mutually independent, for $k=1,\dots, p$.
 - $F_k(\cdot)$ is a cdf for $X_k$ given $X_1,\dots, X_{k-1}.$
-  - i.e., $F_k(x_k \mid x_{k-1}, \dots, x_1) = P(X_k<x_k \mid x_{k-1}, \dots, x_1).$
+  - i.e., $F_k(x_k \mid x_{k-1}, \dots, x_1) = P(X_k\leqx_k \mid x_{k-1}, \dots, x_1).$
 - $F_k^{-1}(\cdot)$ is the inverse cdf, i.e.,
-   $$\begin{align}& F_{k}^{-1}(u \mid x_{k-1}, \dots, x_1) \nonumber \\  =& \Big\{x_k \ \text{ s.t. } \  P(X_k<x_k \mid x_{k-1}, \dots, x_1) = u\Big\}. \nonumber \end{align}$$
+   $$\begin{align}& F_{k}^{-1}(u \mid x_{k-1}, \dots, x_1) \nonumber \\  =& \Big\{x_k \ \text{ s.t. } \  P(X_k\leqx_k \mid x_{k-1}, \dots, x_1) = u\Big\}. \nonumber \end{align}$$
   
   
 ## Sampling from joint distributions
@@ -162,8 +162,8 @@ Example 1: $\mathbf{X}=(X_1, X_2)$, each binary $\{0, 1\}$ variables.
 Then: 
 :::
 
--  $Z_1=\begin{cases} 1 & \text{ if } U_1<0.5 \\ 0 & \text{ if } U_1\geq 0.5 \end{cases}$
-- $Z_2=\begin{cases} 1 & \text{ if } U_2<0.25 \text{ and } Z_1=1 \\ 0 & \text{ if } U_2 \geq 0.25 \text{ and } Z_1=1 \\ 1 & \text{ if } U_2<0.75 \text{ and } Z_1=0   \\ 0 & \text{ if } U_2\geq 0.75 \text{ and } Z_1=0 \end{cases}.$
+-  $Z_1=\begin{cases} 1 & \text{ if } U_1\leq0.5 \\ 0 & \text{ if } U_1\geq 0.5 \end{cases}$
+- $Z_2=\begin{cases} 1 & \text{ if } U_2\leq0.25 \text{ and } Z_1=1 \\ 0 & \text{ if } U_2 \geq 0.25 \text{ and } Z_1=1 \\ 1 & \text{ if } U_2\leq0.75 \text{ and } Z_1=0   \\ 0 & \text{ if } U_2\geq 0.75 \text{ and } Z_1=0 \end{cases}.$
   
 ## Sampling from joint distributions
 

@@ -11,14 +11,14 @@
     "href": "unit1-lect3.html#inverse-transform-sampling",
     "title": "Simulation basics",
     "section": "Inverse transform sampling",
-    "text": "Inverse transform sampling\nKey result:\n\nSuppose \\(U \\sim Unif(0,1)\\)\nSuppose \\(F_X(\\cdot)\\) is a cumulative distribution function (cdf) for (arbitrary) \\(X\\)\n\ni.e., \\(F_X(x) = P(X&lt;x)\\)\n\nSuppose \\(F_X^{-1}(\\cdot)\\) is the inverse cdf\n\ni.e., \\(F_{X}^{-1}(u) = \\Big\\{x \\ \\text{ s.t. } \\  P(X&lt;x) = u\\Big\\}.\\)"
+    "text": "Inverse transform sampling\nKey result:\n\nSuppose \\(U \\sim Unif(0,1)\\)\nSuppose \\(F_X(\\cdot)\\) is a cumulative distribution function (cdf) for (arbitrary) \\(X\\)\n\ni.e., \\(F_X(x) = P(X\\leq x)\\)\n\nSuppose \\(F_X^{-1}(\\cdot)\\) is the inverse cdf\n\ni.e., \\(F_{X}^{-1}(u) = \\Big\\{x \\ \\text{ s.t. } \\  P(X\\leqx) = u\\Big\\}.\\)"
   },
   {
     "objectID": "unit1-lect3.html#inverse-transform-sampling-1",
     "href": "unit1-lect3.html#inverse-transform-sampling-1",
     "title": "Simulation basics",
     "section": "Inverse transform sampling",
-    "text": "Inverse transform sampling\n\nDefine \\(Z=F_{X}^{-1}(U)\\)\n\n\nThen:\n\n\n\\(F_{Z}(x) = P\\Big(F_{X}^{-1}(U)&lt;x\\Big)=F_X(x)\\).\n\ni.e., \\(Z=F_{X}^{-1}(U)\\) is distributed the same as \\(X\\)."
+    "text": "Inverse transform sampling\n\nDefine \\(Z=F_{X}^{-1}(U)\\)\n\n\nThen:\n\n\n\\(F_{Z}(x) = P\\Big(F_{X}^{-1}(U)\\leq x\\Big)=F_X(x)\\).\n\ni.e., \\(Z=F_{X}^{-1}(U)\\) is distributed the same as \\(X\\)."
   },
   {
     "objectID": "unit1-lect3.html#inverse-transform-sampling-2",
@@ -32,21 +32,21 @@
     "href": "unit1-lect3.html#inverse-transform-sampling-3",
     "title": "Simulation basics",
     "section": "Inverse transform sampling",
-    "text": "Inverse transform sampling\nWhy does this work?\n\nThe key property of \\(Unif(0,1)\\) variables (e.g., \\(U\\)) is:\n\n\\(P(U&lt;u)=u\\) for \\(u\\in[0,1]\\).\n\nNow consider some r.v. \\(Y\\) with cdf \\(F_Y\\) taking values on the real number line, \\(\\mathbb{R}\\).\n\nLet’s say it is a standard normal variable \\(\\mathcal{N}(0,1)\\). (disclaimer, normal variables don’t have a closed form cdf)."
+    "text": "Inverse transform sampling\nWhy does this work?\n\nThe key property of \\(Unif(0,1)\\) variables (e.g., \\(U\\)) is:\n\n\\(P(U\\leq u)=u\\) for \\(u\\in[0,1]\\).\n\nNow consider some r.v. \\(Y\\) with cdf \\(F_Y\\) taking values on the real number line, \\(\\mathbb{R}\\).\n\nLet’s say it is a standard normal variable \\(\\mathcal{N}(0,1)\\). (disclaimer, normal variables don’t have a closed form cdf)."
   },
   {
     "objectID": "unit1-lect3.html#inverse-transform-sampling-4",
     "href": "unit1-lect3.html#inverse-transform-sampling-4",
     "title": "Simulation basics",
     "section": "Inverse transform sampling",
-    "text": "Inverse transform sampling\n-Thus (and remembering that \\(F_Y^{-1}\\) is monotonic increasing):\n\n\\(P\\Big(F_Y^{-1}(U)&lt;y\\Big)=P\\Big(U&lt;F_Y(y)\\Big) = F_Y(y).\\)\ne.g., \\(P\\Big(F_Y^{-1}(U)&lt;-1.96\\Big) = P(U&lt;0.025) = 0.025 = P(Y&lt;-1.96)\\)\ne.g., \\(P\\Big(F_Y^{-1}(U)&lt;0\\Big) = P(U&lt;0.5) = 0.5 = P(Y&lt;0)\\)"
+    "text": "Inverse transform sampling\n-Thus (and remembering that \\(F_Y^{-1}\\) is monotonic increasing):\n\n\\(P\\Big(F_Y^{-1}(U)\\leqy\\Big)=P\\Big(U\\leqF_Y(y)\\Big) = F_Y(y).\\)\ne.g., \\(P\\Big(F_Y^{-1}(U)\\leq-1.96\\Big) = P(U\\leq0.025) = 0.025 = P(Y\\leq-1.96)\\)\ne.g., \\(P\\Big(F_Y^{-1}(U)\\leq0\\Big) = P(U\\leq0.5) = 0.5 = P(Y\\leq0)\\)"
   },
   {
     "objectID": "unit1-lect3.html#inverse-transform-sampling-5",
     "href": "unit1-lect3.html#inverse-transform-sampling-5",
     "title": "Simulation basics",
     "section": "Inverse transform sampling",
-    "text": "Inverse transform sampling\n\nU&lt;-runif(10000, 0,1)\nhead(U, 25)\n\n [1] 0.868779559 0.766590637 0.507304552 0.780979963 0.772016089 0.313782562\n [7] 0.124369882 0.057669285 0.147423162 0.004199094 0.113316188 0.238059777\n[13] 0.448354622 0.522180225 0.890023589 0.816170455 0.390118059 0.120435805\n[19] 0.262580578 0.117165140 0.567276212 0.831596642 0.562445226 0.211932160\n[25] 0.885022396\n\n\n\nZ&lt;-qnorm(U, 0, 1)\nhead(Z, 25)\n\n [1]  1.12064058  0.72766493  0.01831082  0.77550709  0.74550280 -0.48515680\n [7] -1.15341579 -1.57464430 -1.04754926 -2.63562748 -1.20907931 -0.71255760\n[13] -0.12981949  0.05562625  1.22665358  0.90086690 -0.27901134 -1.17281099\n[19] -0.63540983 -1.18927803  0.16944380  0.96049387  0.15717168 -0.79973505\n[25]  1.20047425"
+    "text": "Inverse transform sampling\n\nU&lt;-runif(10000, 0,1)\nhead(U, 25)\n\n [1] 0.09917466 0.19873888 0.91107296 0.18034093 0.22990421 0.01473255\n [7] 0.36201053 0.35353521 0.42074918 0.44553400 0.53369765 0.55343359\n[13] 0.56788955 0.66918928 0.51758747 0.60030990 0.96551891 0.25034516\n[19] 0.03299121 0.30767756 0.83395037 0.15374975 0.72974314 0.34551738\n[25] 0.05465245\n\n\n\nZ&lt;-qnorm(U, 0, 1)\nhead(Z, 25)\n\n [1] -1.28626863 -0.84613443  1.34739179 -0.91406660 -0.73916235 -2.17720742\n [7] -0.35308989 -0.37579350 -0.19997726 -0.13695294  0.08456818  0.13434115\n[13]  0.17100365  0.43767563  0.04409954  0.25414933  1.81866752 -0.67340396\n[19] -1.83854311 -0.50244416  0.96989414 -1.02048290  0.61203634 -0.39745120\n[25] -1.60132522"
   },
   {
     "objectID": "unit1-lect3.html#inverse-transform-sampling-6",
@@ -74,7 +74,7 @@
     "href": "unit1-lect3.html#sampling-from-joint-distributions",
     "title": "Simulation basics",
     "section": "Sampling from joint distributions",
-    "text": "Sampling from joint distributions\nSuppose:\n\n\\(U_k \\sim Unif(0,1)\\) are mutually independent, for \\(k=1,\\dots, p\\).\n\\(F_k(\\cdot)\\) is a cdf for \\(X_k\\) given \\(X_1,\\dots, X_{k-1}.\\)\n\ni.e., \\(F_k(x_k \\mid x_{k-1}, \\dots, x_1) = P(X_k&lt;x_k \\mid x_{k-1}, \\dots, x_1).\\)\n\n\\(F_k^{-1}(\\cdot)\\) is the inverse cdf, i.e., \\[\\begin{align}& F_{k}^{-1}(u \\mid x_{k-1}, \\dots, x_1) \\nonumber \\\\  =& \\Big\\{x_k \\ \\text{ s.t. } \\  P(X_k&lt;x_k \\mid x_{k-1}, \\dots, x_1) = u\\Big\\}. \\nonumber \\end{align}\\]"
+    "text": "Sampling from joint distributions\nSuppose:\n\n\\(U_k \\sim Unif(0,1)\\) are mutually independent, for \\(k=1,\\dots, p\\).\n\\(F_k(\\cdot)\\) is a cdf for \\(X_k\\) given \\(X_1,\\dots, X_{k-1}.\\)\n\ni.e., \\(F_k(x_k \\mid x_{k-1}, \\dots, x_1) = P(X_k\\leqx_k \\mid x_{k-1}, \\dots, x_1).\\)\n\n\\(F_k^{-1}(\\cdot)\\) is the inverse cdf, i.e., \\[\\begin{align}& F_{k}^{-1}(u \\mid x_{k-1}, \\dots, x_1) \\nonumber \\\\  =& \\Big\\{x_k \\ \\text{ s.t. } \\  P(X_k\\leqx_k \\mid x_{k-1}, \\dots, x_1) = u\\Big\\}. \\nonumber \\end{align}\\]"
   },
   {
     "objectID": "unit1-lect3.html#sampling-from-joint-distributions-1",
@@ -88,14 +88,14 @@
     "href": "unit1-lect3.html#sampling-from-joint-distributions-2",
     "title": "Simulation basics",
     "section": "Sampling from joint distributions",
-    "text": "Sampling from joint distributions\nExample 1: \\(\\mathbf{X}=(X_1, X_2)\\), each binary \\(\\{0, 1\\}\\) variables.\n\n\\(P(X_1=1)=0.5\\),\n\\(P(X_2 =1 \\mid X_1=x_1 )= \\begin{cases} 0.25 \\text{ if } x_1=1 \\\\ 0.75 \\text{ if } x_1=0 \\end{cases}\\)\n\n\nThen:\n\n\n\\(Z_1=\\begin{cases} 1 & \\text{ if } U_1&lt;0.5 \\\\ 0 & \\text{ if } U_1\\geq 0.5 \\end{cases}\\)\n\\(Z_2=\\begin{cases} 1 & \\text{ if } U_2&lt;0.25 \\text{ and } Z_1=1 \\\\ 0 & \\text{ if } U_2 \\geq 0.25 \\text{ and } Z_1=1 \\\\ 1 & \\text{ if } U_2&lt;0.75 \\text{ and } Z_1=0   \\\\ 0 & \\text{ if } U_2\\geq 0.75 \\text{ and } Z_1=0 \\end{cases}.\\)"
+    "text": "Sampling from joint distributions\nExample 1: \\(\\mathbf{X}=(X_1, X_2)\\), each binary \\(\\{0, 1\\}\\) variables.\n\n\\(P(X_1=1)=0.5\\),\n\\(P(X_2 =1 \\mid X_1=x_1 )= \\begin{cases} 0.25 \\text{ if } x_1=1 \\\\ 0.75 \\text{ if } x_1=0 \\end{cases}\\)\n\n\nThen:\n\n\n\\(Z_1=\\begin{cases} 1 & \\text{ if } U_1\\leq0.5 \\\\ 0 & \\text{ if } U_1\\geq 0.5 \\end{cases}\\)\n\\(Z_2=\\begin{cases} 1 & \\text{ if } U_2\\leq0.25 \\text{ and } Z_1=1 \\\\ 0 & \\text{ if } U_2 \\geq 0.25 \\text{ and } Z_1=1 \\\\ 1 & \\text{ if } U_2\\leq0.75 \\text{ and } Z_1=0   \\\\ 0 & \\text{ if } U_2\\geq 0.75 \\text{ and } Z_1=0 \\end{cases}.\\)"
   },
   {
     "objectID": "unit1-lect3.html#sampling-from-joint-distributions-3",
     "href": "unit1-lect3.html#sampling-from-joint-distributions-3",
     "title": "Simulation basics",
     "section": "Sampling from joint distributions",
-    "text": "Sampling from joint distributions\n\nU1&lt;-runif(10000, 0,1)\nU2&lt;-runif(10000, 0,1)\nZ1 = qbinom(U1, 1, 0.5)\nZ2 = qbinom(U2, 1, 0.75 - Z1*0.5)\nprop.table(table(Z1))[2]\n\n     1 \n0.5017 \n\nprop.table(table(Z1, Z2), margin=1)[2, ]\n\n        0         1 \n0.7596173 0.2403827"
+    "text": "Sampling from joint distributions\n\nU1&lt;-runif(10000, 0,1)\nU2&lt;-runif(10000, 0,1)\nZ1 = qbinom(U1, 1, 0.5)\nZ2 = qbinom(U2, 1, 0.75 - Z1*0.5)\nprop.table(table(Z1))[2]\n\n     1 \n0.5046 \n\nprop.table(table(Z1, Z2), margin=1)[2, ]\n\n        0         1 \n0.7439556 0.2560444"
   },
   {
     "objectID": "unit1-lect3.html#sampling-from-joint-distributions-4",
@@ -116,7 +116,7 @@
     "href": "unit1-lect3.html#sampling-from-joint-distributions-6",
     "title": "Simulation basics",
     "section": "Sampling from joint distributions",
-    "text": "Sampling from joint distributions\n\nU1&lt;-runif(100, 0,1)\nU2&lt;-runif(100, 0,1)\nZ1 = qnorm(U1, 0, 1)\nZ2 = qnorm(U2, 0.5*Z1 + 2*Z1^2, 2)\nlm(Z2~Z1 + I(Z1^2))\n\n\nCall:\nlm(formula = Z2 ~ Z1 + I(Z1^2))\n\nCoefficients:\n(Intercept)           Z1      I(Z1^2)  \n   -0.02506      0.32304      1.96991"
+    "text": "Sampling from joint distributions\n\nU1&lt;-runif(100, 0,1)\nU2&lt;-runif(100, 0,1)\nZ1 = qnorm(U1, 0, 1)\nZ2 = qnorm(U2, 0.5*Z1 + 2*Z1^2, 2)\nlm(Z2~Z1 + I(Z1^2))\n\n\nCall:\nlm(formula = Z2 ~ Z1 + I(Z1^2))\n\nCoefficients:\n(Intercept)           Z1      I(Z1^2)  \n    -0.2794       0.3113       1.9627"
   },
   {
     "objectID": "unit1-lect3.html#sampling-from-joint-distributions-7",
@@ -137,14 +137,14 @@
     "href": "unit1-lect3.html#sampling-from-sampling-distributions-1",
     "title": "Simulation basics",
     "section": "Sampling from sampling distributions",
-    "text": "Sampling from sampling distributions\nHere we simulate a single sample of size \\(n=100\\).\n\nn=100\nU1&lt;-runif(n)\nU2&lt;-runif(n, 0,1)\nZ1 = qnorm(U1, 0, 1)\nZ2 = qnorm(U2, 0.5*Z1 + 2*Z1^2, 2)\nfit &lt;- lm(Z2 ~ Z1 + I(Z1^2), data = df)\ncoef(fit)[\"I(Z1^2)\"]\n\n I(Z1^2) \n1.969912 \n\nsummary(fit)$coefficients[\"I(Z1^2)\", \"Std. Error\"]\n\n[1] 0.1755873"
+    "text": "Sampling from sampling distributions\nHere we simulate a single sample of size \\(n=100\\).\n\nn=100\nU1&lt;-runif(n)\nU2&lt;-runif(n, 0,1)\nZ1 = qnorm(U1, 0, 1)\nZ2 = qnorm(U2, 0.5*Z1 + 2*Z1^2, 2)\nfit &lt;- lm(Z2 ~ Z1 + I(Z1^2), data = df)\ncoef(fit)[\"I(Z1^2)\"]\n\nI(Z1^2) \n1.96272 \n\nsummary(fit)$coefficients[\"I(Z1^2)\", \"Std. Error\"]\n\n[1] 0.1953438"
   },
   {
     "objectID": "unit1-lect3.html#sampling-from-sampling-distributions-2",
     "href": "unit1-lect3.html#sampling-from-sampling-distributions-2",
     "title": "Simulation basics",
     "section": "Sampling from sampling distributions",
-    "text": "Sampling from sampling distributions\nHere we simulate a 1000 samples of size \\(n=100\\).\n\nlibrary(dplyr)\nn=100\nB=10000\nU1 = runif(n*B, 0,1)\nU2 = runif(n*B, 0,1)\nZ1 = qnorm(U1, 0, 1) %&gt;% matrix(nrow=n, ncol=B)\nZ2 = qnorm(U2, 0.5*Z1 + 2*Z1^2, 2) %&gt;% matrix(nrow=n, ncol=B)\nbeta_2_hat = rep(NA, B)\nbeta_0_hat &lt;- rep(NA, B)\nbeta_1_hat &lt;- rep(NA, B)\nse_beta0 = rep(NA, B)\nse_beta1 = rep(NA, B)\nse_beta2 = rep(NA, B)\nfor(i in 1:B){\n  df&lt;-data.frame(Z1=Z1[,i], Z2=Z2[,i])\n  fit &lt;- lm(Z2 ~ Z1 + I(Z1^2), data=df)\n  beta_0_hat[i] &lt;- coef(fit)[\"(Intercept)\"]\n  se_beta0[i] &lt;- summary(fit)$coefficients[\"(Intercept)\", \"Std. Error\"]\n  beta_1_hat[i] &lt;- coef(fit)[\"Z1\"]\n  se_beta1[i] &lt;- summary(fit)$coefficients[\"Z1\", \"Std. Error\"]\n  beta_2_hat[i] &lt;- coef(fit)[\"I(Z1^2)\"]\n  se_beta2[i] &lt;- summary(fit)$coefficients[\"I(Z1^2)\", \"Std. Error\"]\n}\nmean(beta_0_hat - 0)\n\n[1] -0.001085881\n\nmean(se_beta0-sd(beta_0_hat))\n\n[1] 0.001268872\n\nmean(beta_1_hat - 0.5)\n\n[1] -0.00119077\n\nmean(se_beta1-sd(beta_1_hat))\n\n[1] -0.0005488761\n\nmean(beta_2_hat - 2)\n\n[1] 8.977828e-05\n\nmean(se_beta2-sd(beta_2_hat))\n\n[1] -0.002575387"
+    "text": "Sampling from sampling distributions\nHere we simulate a 1000 samples of size \\(n=100\\).\n\nlibrary(dplyr)\nn=100\nB=10000\nU1 = runif(n*B, 0,1)\nU2 = runif(n*B, 0,1)\nZ1 = qnorm(U1, 0, 1) %&gt;% matrix(nrow=n, ncol=B)\nZ2 = qnorm(U2, 0.5*Z1 + 2*Z1^2, 2) %&gt;% matrix(nrow=n, ncol=B)\nbeta_2_hat = rep(NA, B)\nbeta_0_hat &lt;- rep(NA, B)\nbeta_1_hat &lt;- rep(NA, B)\nse_beta0 = rep(NA, B)\nse_beta1 = rep(NA, B)\nse_beta2 = rep(NA, B)\nfor(i in 1:B){\n  df&lt;-data.frame(Z1=Z1[,i], Z2=Z2[,i])\n  fit &lt;- lm(Z2 ~ Z1 + I(Z1^2), data=df)\n  beta_0_hat[i] &lt;- coef(fit)[\"(Intercept)\"]\n  se_beta0[i] &lt;- summary(fit)$coefficients[\"(Intercept)\", \"Std. Error\"]\n  beta_1_hat[i] &lt;- coef(fit)[\"Z1\"]\n  se_beta1[i] &lt;- summary(fit)$coefficients[\"Z1\", \"Std. Error\"]\n  beta_2_hat[i] &lt;- coef(fit)[\"I(Z1^2)\"]\n  se_beta2[i] &lt;- summary(fit)$coefficients[\"I(Z1^2)\", \"Std. Error\"]\n}\nmean(beta_0_hat - 0)\n\n[1] -0.003695087\n\nmean(se_beta0-sd(beta_0_hat))\n\n[1] -0.001819115\n\nmean(beta_1_hat - 0.5)\n\n[1] 0.002159592\n\nmean(se_beta1-sd(beta_1_hat))\n\n[1] -0.00165578\n\nmean(beta_2_hat - 2)\n\n[1] 0.0007921485\n\nmean(se_beta2-sd(beta_2_hat))\n\n[1] -0.001903839"
   },
   {
     "objectID": "unit1-lect3.html#sampling-from-sampling-distributions-3",
