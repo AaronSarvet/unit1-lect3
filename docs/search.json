@@ -46,7 +46,7 @@
     "href": "unit1-lect3.html#inverse-transform-sampling-5",
     "title": "Simulation basics",
     "section": "Inverse transform sampling",
-    "text": "Inverse transform sampling\n\nU&lt;-runif(10000, 0,1)\nhead(U, 25)\n\n [1] 0.09917466 0.19873888 0.91107296 0.18034093 0.22990421 0.01473255\n [7] 0.36201053 0.35353521 0.42074918 0.44553400 0.53369765 0.55343359\n[13] 0.56788955 0.66918928 0.51758747 0.60030990 0.96551891 0.25034516\n[19] 0.03299121 0.30767756 0.83395037 0.15374975 0.72974314 0.34551738\n[25] 0.05465245\n\n\n\nZ&lt;-qnorm(U, 0, 1)\nhead(Z, 25)\n\n [1] -1.28626863 -0.84613443  1.34739179 -0.91406660 -0.73916235 -2.17720742\n [7] -0.35308989 -0.37579350 -0.19997726 -0.13695294  0.08456818  0.13434115\n[13]  0.17100365  0.43767563  0.04409954  0.25414933  1.81866752 -0.67340396\n[19] -1.83854311 -0.50244416  0.96989414 -1.02048290  0.61203634 -0.39745120\n[25] -1.60132522"
+    "text": "Inverse transform sampling\n\nU&lt;-runif(10000, 0,1)\nhead(U, 25)\n\n [1] 0.32441236 0.56355126 0.84076469 0.26797076 0.69033516 0.97579100\n [7] 0.24214535 0.64079510 0.45448931 0.28216856 0.67918275 0.41649364\n[13] 0.83513271 0.15099610 0.92691326 0.16886967 0.53020949 0.04956552\n[19] 0.19395463 0.96597865 0.76374109 0.01728141 0.08489650 0.54245551\n[25] 0.70216479\n\n\n\nZ&lt;-qnorm(U, 0, 1)\nhead(Z, 25)\n\n [1] -0.45539550  0.15997916  0.99760567 -0.61896181  0.49680060  1.97368122\n [7] -0.69941823  0.36058486 -0.11432694 -0.57641143  0.46541470 -0.21087183\n[13]  0.97464865 -1.03217061  1.45318107 -0.95864157  0.07579646 -1.64908106\n[19] -0.86341515  1.82472397  0.71838843 -2.11344355 -1.37286923  0.10662187\n[25]  0.53063691"
   },
   {
     "objectID": "unit1-lect3.html#inverse-transform-sampling-6",
@@ -95,7 +95,7 @@
     "href": "unit1-lect3.html#sampling-from-joint-distributions-3",
     "title": "Simulation basics",
     "section": "Sampling from joint distributions",
-    "text": "Sampling from joint distributions\n\nU1&lt;-runif(10000, 0,1)\nU2&lt;-runif(10000, 0,1)\nZ1 = qbinom(U1, 1, 0.5)\nZ2 = qbinom(U2, 1, 0.75 - Z1*0.5)\nprop.table(table(Z1))[2]\n\n     1 \n0.5046 \n\nprop.table(table(Z1, Z2), margin=1)[2, ]\n\n        0         1 \n0.7439556 0.2560444"
+    "text": "Sampling from joint distributions\n\nU1&lt;-runif(10000, 0,1)\nU2&lt;-runif(10000, 0,1)\nZ1 = qbinom(U1, 1, 0.5)\nZ2 = qbinom(U2, 1, 0.75 - Z1*0.5)\nprop.table(table(Z1))[2]\n\n     1 \n0.5004 \n\nprop.table(table(Z1, Z2), margin=1)[2, ]\n\n        0         1 \n0.7396083 0.2603917"
   },
   {
     "objectID": "unit1-lect3.html#sampling-from-joint-distributions-4",
@@ -116,7 +116,7 @@
     "href": "unit1-lect3.html#sampling-from-joint-distributions-6",
     "title": "Simulation basics",
     "section": "Sampling from joint distributions",
-    "text": "Sampling from joint distributions\n\nU1&lt;-runif(100, 0,1)\nU2&lt;-runif(100, 0,1)\nZ1 = qnorm(U1, 0, 1)\nZ2 = qnorm(U2, 0.5*Z1 + 2*Z1^2, 2)\nlm(Z2~Z1 + I(Z1^2))\n\n\nCall:\nlm(formula = Z2 ~ Z1 + I(Z1^2))\n\nCoefficients:\n(Intercept)           Z1      I(Z1^2)  \n    -0.2794       0.3113       1.9627"
+    "text": "Sampling from joint distributions\n\nU1&lt;-runif(100, 0,1)\nU2&lt;-runif(100, 0,1)\nZ1 = qnorm(U1, 0, 1)\nZ2 = qnorm(U2, 0.5*Z1 + 2*Z1^2, 2)\nlm(Z2~Z1 + I(Z1^2))\n\n\nCall:\nlm(formula = Z2 ~ Z1 + I(Z1^2))\n\nCoefficients:\n(Intercept)           Z1      I(Z1^2)  \n   -0.06174      0.54997      1.79808"
   },
   {
     "objectID": "unit1-lect3.html#sampling-from-joint-distributions-7",
@@ -137,14 +137,14 @@
     "href": "unit1-lect3.html#sampling-from-sampling-distributions-1",
     "title": "Simulation basics",
     "section": "Sampling from sampling distributions",
-    "text": "Sampling from sampling distributions\nHere we simulate a single sample of size \\(n=100\\).\n\nn=100\nU1&lt;-runif(n)\nU2&lt;-runif(n, 0,1)\nZ1 = qnorm(U1, 0, 1)\nZ2 = qnorm(U2, 0.5*Z1 + 2*Z1^2, 2)\nfit &lt;- lm(Z2 ~ Z1 + I(Z1^2), data = df)\ncoef(fit)[\"I(Z1^2)\"]\n\nI(Z1^2) \n1.96272 \n\nsummary(fit)$coefficients[\"I(Z1^2)\", \"Std. Error\"]\n\n[1] 0.1953438"
+    "text": "Sampling from sampling distributions\nHere we simulate a single sample of size \\(n=100\\).\n\nn=100\nU1&lt;-runif(n)\nU2&lt;-runif(n, 0,1)\nZ1 = qnorm(U1, 0, 1)\nZ2 = qnorm(U2, 0.5*Z1 + 2*Z1^2, 2)\nfit &lt;- lm(Z2 ~ Z1 + I(Z1^2), data = df)\ncoef(fit)[\"I(Z1^2)\"]\n\n I(Z1^2) \n1.798078 \n\nsummary(fit)$coefficients[\"I(Z1^2)\", \"Std. Error\"]\n\n[1] 0.1558817"
   },
   {
     "objectID": "unit1-lect3.html#sampling-from-sampling-distributions-2",
     "href": "unit1-lect3.html#sampling-from-sampling-distributions-2",
     "title": "Simulation basics",
     "section": "Sampling from sampling distributions",
-    "text": "Sampling from sampling distributions\nHere we simulate a 1000 samples of size \\(n=100\\).\n\nlibrary(dplyr)\nn=100\nB=10000\nU1 = runif(n*B, 0,1)\nU2 = runif(n*B, 0,1)\nZ1 = qnorm(U1, 0, 1) %&gt;% matrix(nrow=n, ncol=B)\nZ2 = qnorm(U2, 0.5*Z1 + 2*Z1^2, 2) %&gt;% matrix(nrow=n, ncol=B)\nbeta_2_hat = rep(NA, B)\nbeta_0_hat &lt;- rep(NA, B)\nbeta_1_hat &lt;- rep(NA, B)\nse_beta0 = rep(NA, B)\nse_beta1 = rep(NA, B)\nse_beta2 = rep(NA, B)\nfor(i in 1:B){\n  df&lt;-data.frame(Z1=Z1[,i], Z2=Z2[,i])\n  fit &lt;- lm(Z2 ~ Z1 + I(Z1^2), data=df)\n  beta_0_hat[i] &lt;- coef(fit)[\"(Intercept)\"]\n  se_beta0[i] &lt;- summary(fit)$coefficients[\"(Intercept)\", \"Std. Error\"]\n  beta_1_hat[i] &lt;- coef(fit)[\"Z1\"]\n  se_beta1[i] &lt;- summary(fit)$coefficients[\"Z1\", \"Std. Error\"]\n  beta_2_hat[i] &lt;- coef(fit)[\"I(Z1^2)\"]\n  se_beta2[i] &lt;- summary(fit)$coefficients[\"I(Z1^2)\", \"Std. Error\"]\n}\nmean(beta_0_hat - 0)\n\n[1] -0.003695087\n\nmean(se_beta0-sd(beta_0_hat))\n\n[1] -0.001819115\n\nmean(beta_1_hat - 0.5)\n\n[1] 0.002159592\n\nmean(se_beta1-sd(beta_1_hat))\n\n[1] -0.00165578\n\nmean(beta_2_hat - 2)\n\n[1] 0.0007921485\n\nmean(se_beta2-sd(beta_2_hat))\n\n[1] -0.001903839"
+    "text": "Sampling from sampling distributions\nHere we simulate a 1000 samples of size \\(n=100\\).\n\nlibrary(dplyr)\nn=100\nB=10000\nU1 = runif(n*B, 0,1)\nU2 = runif(n*B, 0,1)\nZ1 = qnorm(U1, 0, 1) %&gt;% matrix(nrow=n, ncol=B)\nZ2 = qnorm(U2, 0.5*Z1 + 2*Z1^2, 2) %&gt;% matrix(nrow=n, ncol=B)\nbeta_2_hat = rep(NA, B)\nbeta_0_hat &lt;- rep(NA, B)\nbeta_1_hat &lt;- rep(NA, B)\nse_beta0 = rep(NA, B)\nse_beta1 = rep(NA, B)\nse_beta2 = rep(NA, B)\nfor(i in 1:B){\n  df&lt;-data.frame(Z1=Z1[,i], Z2=Z2[,i])\n  fit &lt;- lm(Z2 ~ Z1 + I(Z1^2), data=df)\n  beta_0_hat[i] &lt;- coef(fit)[\"(Intercept)\"]\n  se_beta0[i] &lt;- summary(fit)$coefficients[\"(Intercept)\", \"Std. Error\"]\n  beta_1_hat[i] &lt;- coef(fit)[\"Z1\"]\n  se_beta1[i] &lt;- summary(fit)$coefficients[\"Z1\", \"Std. Error\"]\n  beta_2_hat[i] &lt;- coef(fit)[\"I(Z1^2)\"]\n  se_beta2[i] &lt;- summary(fit)$coefficients[\"I(Z1^2)\", \"Std. Error\"]\n}\nmean(beta_0_hat - 0)\n\n[1] 0.00204667\n\nmean(se_beta0-sd(beta_0_hat))\n\n[1] -0.00118877\n\nmean(beta_1_hat - 0.5)\n\n[1] -0.0002857729\n\nmean(se_beta1-sd(beta_1_hat))\n\n[1] -0.0001139117\n\nmean(beta_2_hat - 2)\n\n[1] -0.0002417659\n\nmean(se_beta2-sd(beta_2_hat))\n\n[1] -0.002098388"
   },
   {
     "objectID": "unit1-lect3.html#sampling-from-sampling-distributions-3",
